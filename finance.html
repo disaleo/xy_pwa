@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExWhy - Report Finance</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="https://exwhy.it/Xy.ico" type="image/x-icon">
+
+    <!-- Font Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- Stili CSS -->
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Roboto', sans-serif;
+            color: #ffffff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            background-image: url('https://exwhy.it/Start.jpg'); /* Immagine di sfondo */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* Menu di navigazione */
+        .navbar {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .navbar .logo {
+            width: 120px;
+            margin-left: 30px;
+        }
+
+        .navbar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .navbar ul li {
+            margin: 0 20px;
+        }
+
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 8px 16px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar ul li a:hover {
+            color: #00ccff;
+        }
+
+        /* Contenitore principale */
+        .container {
+            text-align: center;
+            padding: 120px 20px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+            backdrop-filter: blur(20px); /* Effetto vetro smerigliato */
+        }
+
+        /* Titolo della pagina */
+        h1 {
+            margin: 20px 0 50px; /* Spazio sotto il titolo */
+            font-size: 42px;
+            font-weight: 700;
+            color: #80d0e1; /* Colore meno brillante */
+            text-shadow: 0 0 4px #80d0e1, 0 0 6px #0056b3;
+        }
+
+        /* Griglia dei report */
+        .report-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Card dei report */
+        .report-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(20px);
+            cursor: pointer;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+        }
+
+        .report-card:hover {
+            transform: translateY(-10px);
+            background-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.5), 0 0 15px #00ccff;
+        }
+
+        /* Testo delle card */
+        .report-card h3 {
+            margin-bottom: 10px;
+            font-size: 24px;
+            font-weight: 500;
+            color: #ffffff;
+        }
+
+        .report-card p {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #c4e0ff;
+        }
+
+        .report-card a {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #007bff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .report-card a:hover {
+            background-color: #0056b3;
+        }
+
+        /* Sezione contatti */
+        .contacts {
+            margin-top: 60px;
+            font-size: 18px;
+            color: #ffffff;
+        }
+
+        .contacts p {
+            margin: 5px 0;
+        }
+
+        .contacts a {
+            color: #00ccff;
+            text-decoration: none;
+        }
+
+        .contacts a:hover {
+            text-decoration: underline;
+        }
+
+        /* Copyright */
+        .copyright {
+            margin-top: 40px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Griglia responsive */
+        @media (max-width: 1200px) {
+            .report-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
+
+            .report-list {
+                grid-template-columns: 1fr;
+            }
+
+            .report-card {
+                width: 100%;
+                margin: 15px 0;
+            }
+
+            .logo {
+                width: 100px;
+            }
+        }
+        /* Disponibilità del report: pallino pieno o vuoto */
+    .icon {
+        font-size: 18px;
+        margin-left: 10px;
+    }
+
+    /* Report disponibile */
+    .report-available .icon {
+        color: #00ccff; /* Colore pallino pieno per i disponibili */
+    }
+
+    /* Report non disponibile */
+    .report-unavailable {
+        opacity: 0.5; /* Opacità per i report non disponibili */
+    }
+
+    .report-unavailable .icon {
+        color: #ffdf00; /* Colore pallino vuoto per i non disponibili */
+    }
+
+    /* Animazioni per ingrandimento e transizione */
+    .section-card {
+        transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .section-card:hover {
+        transform: scale(1.05); /* Leggero ingrandimento */
+        background-color: rgba(255, 255, 255, 0.2); /* Cambia colore dello sfondo */
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.5), 0 0 15px #00ccff; /* Effetto luce */
+    }
+    /* Animazioni per i pulsanti */
+    .button, .home-button {
+        transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .button:hover, .home-button:hover {
+        transform: scale(1.05); /* Effetto ingrandimento */
+        background-color: #0056b3;
+    }
+    /* Animazioni per ingrandimento e transizione */
+.report-card {
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.report-card:hover {
+    transform: scale(1.05); /* Leggero ingrandimento */
+    background-color: rgba(255, 255, 255, 0.2); /* Cambia colore dello sfondo */
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.5), 0 0 15px #00ccff; /* Effetto luce */
+}
+
+    </style>
+
+
+<!--[if gte mso 9]><xml>
+<mso:CustomDocumentProperties>
+<mso:_dlc_DocId msdt:dt="string">6RN3CT7PY46U-1378638055-283436</mso:_dlc_DocId>
+<mso:_dlc_DocIdItemGuid msdt:dt="string">d99b1f50-db94-468b-b8c0-ce6341b38f08</mso:_dlc_DocIdItemGuid>
+<mso:_dlc_DocIdUrl msdt:dt="string">https://ldsconsultingsrl.sharepoint.com/sites/ExY_Doc/_layouts/15/DocIdRedir.aspx?ID=6RN3CT7PY46U-1378638055-283436, 6RN3CT7PY46U-1378638055-283436</mso:_dlc_DocIdUrl>
+</mso:CustomDocumentProperties>
+</xml><![endif]-->
+</head>
+<body>
+
+    <div class="navbar">
+        <img src="https://exwhy.it/XyLogoBianco.png" alt="Logo ExWhy" class="logo">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <!-- Titolo della pagina -->
+        <h1>Report Finance</h1>
+
+        <!-- Lista report -->
+        <div class="report-list">
+            <div class="report-card report-available">
+                <h3>il Bilancio <span class="icon">&#9679;</span></h3> <!-- Pallino pieno -->
+                <p>Analizza i dati del bilancio per ottenere un'idea chiara della situazione finanziaria.</p>
+                <a href="bilancio.html" target="_blank">Visualizza</a>
+            </div>
+        
+            <div class="report-card report-unavailable">
+                <h3>il Flusso di Cassa <span class="icon">&#9675;</span></h3> <!-- Pallino vuoto -->
+                <p>Monitora il flusso di cassa per garantire una gestione finanziaria ottimale.</p>
+                <a href="ModuloNonAcquistato.html" target="_blank">Non Disponibile</a>
+            </div>
+        </div>
+
+        <!-- Sezione contatti -->
+        <div class="Rete Commerciale">
+            <p>Telefono: +39 0583 406 155</p>
+            <p>Email: <a href="mailto:supporto@exwhy.it">supporto@exwhy.it</a></p>
+        </div>
+
+        <!-- Copyright -->
+        <div class="copyright">
+            <p>&copy; 2024 ExWhy - Tutti i diritti riservati.</p>
+        </div>
+    </div>
+
+</body>
+</html>

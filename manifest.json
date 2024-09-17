@@ -1,0 +1,27 @@
+{
+  "name": "ExWhy - Ramacciotti Report",
+  "short_name": "ExWhy Reports",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#6b83e6",
+  "theme_color": "#007bff",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://exwhy.it/Xylogo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://exwhy.it/Xylogo.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "https://exwhy.it/Xylogo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

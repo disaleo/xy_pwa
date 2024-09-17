@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExWhy - Ramacciotti Report Console</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="https://exwhy.it/Xy.ico" type="image/x-icon">
+
+    <!-- Font Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- Stili CSS -->
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Roboto', sans-serif;
+            color: #ffffff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            background-image: url('https://exwhy.it/Start.jpg'); /* Inserisci l'URL corretto dell'immagine di sfondo */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* Menu di navigazione */
+        .navbar {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .navbar .logo {
+            width: 120px;
+            margin-left: 30px;
+        }
+
+        .navbar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .navbar ul li {
+            margin: 0 20px;
+        }
+
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 8px 16px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar ul li a:hover {
+            color: #00ccff;
+        }
+
+        /* Contenitore principale */
+        .container {
+            text-align: center;
+            padding: 120px 20px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+            backdrop-filter: blur(20px); /* Effetto vetro smerigliato */
+        }
+
+        /* Titolo principale con colore meno invadente e più spazio sotto */
+        h1 {
+            margin: 20px 0 50px;
+            font-size: 42px;
+            font-weight: 700;
+            color: #80d0e1;
+            text-shadow: 0 0 4px #80d0e1, 0 0 6px #0056b3;
+        }
+
+        /* Contenitore per le animazioni */
+        .canvas-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-bottom: 50px;
+        }
+
+        canvas {
+            width: 400px; /* Dimensioni ridotte per il canvas */
+            height: 300px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Sezione contatti */
+        .contacts {
+            margin-top: 60px;
+            font-size: 18px;
+            color: #ffffff;
+        }
+
+        .contacts p {
+            margin: 5px 0;
+        }
+
+        .contacts a {
+            color: #00ccff;
+            text-decoration: none;
+        }
+
+        .contacts a:hover {
+            text-decoration: underline;
+        }
+
+        /* Copyright */
+        .copyright {
+            margin-top: 40px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+    </style>
+
+<!--[if gte mso 9]><xml>
+<mso:CustomDocumentProperties>
+<mso:_dlc_DocId msdt:dt="string">6RN3CT7PY46U-1378638055-283441</mso:_dlc_DocId>
+<mso:_dlc_DocIdItemGuid msdt:dt="string">b0108026-75a1-4d7a-b687-8231469d886a</mso:_dlc_DocIdItemGuid>
+<mso:_dlc_DocIdUrl msdt:dt="string">https://ldsconsultingsrl.sharepoint.com/sites/ExY_Doc/_layouts/15/DocIdRedir.aspx?ID=6RN3CT7PY46U-1378638055-283441, 6RN3CT7PY46U-1378638055-283441</mso:_dlc_DocIdUrl>
+</mso:CustomDocumentProperties>
+</xml><![endif]-->
+</head>
+<body>
+
+    <!-- Menu di navigazione -->
+    <div class="navbar">
+        <img src="https://exwhy.it/XyLogoBianco.png" alt="Logo ExWhy" class="logo">
+        <ul>
+            <li><a href="#sezioni">Sezioni</a></li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <!-- Titolo -->
+        <h1>ExWhy - Ramacciotti Report Console</h1>
+
+        <!-- Contenitore per le animazioni -->
+        <div class="canvas-container">
+            <!-- Prima animazione (da canvas.html) -->
+            <canvas id="canvas.html"></canvas>
+
+            <!-- Seconda animazione (da canvas2.html) -->
+            <canvas id="canvas2.html"></canvas>
+        </div>
+
+        <!-- Sezione contatti -->
+        <div class="contacts">
+            <p>Telefono: +39 0583 406 155</p>
+            <p>Email: <a href="mailto:supporto@exwhy.it">supporto@exwhy.it</a></p>
+        </div>
+
+        <!-- Copyright -->
+        <div class="copyright">
+            <p>&copy; 2024 ExWhy - Tutti i diritti riservati.</p>
+        </div>
+    </div>
+
+    <!-- Script per l'animazione 1 (preso da canvas.html) -->
+    <script>
+        const canvas1 = document.getElementById('animation1');
+        const ctx1 = canvas1.getContext('2d');
+        canvas1.width = canvas1.offsetWidth;
+        canvas1.height = canvas1.offsetHeight;
+
+        function animateCanvas1() {
+            ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+            // Inserisci qui il codice per l'animazione del primo canvas (canvas.html)
+        }
+
+        animateCanvas1();
+    </script>
+
+    <!-- Script per l'animazione 2 (preso da canvas2.html) -->
+    <script>
+        const canvas2 = document.getElementById('animation2');
+        const ctx2 = canvas2.getContext('2d');
+        canvas2.width = canvas2.offsetWidth;
+        canvas2.height = canvas2.offsetHeight;
+
+        function animateCanvas2() {
+            ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+            // Inserisci qui il codice per l'animazione del secondo canvas (canvas2.html)
+        }
+
+        animateCanvas2();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animazione Linea Curvilinea - Prezzi e Tempo</title>
+
+    <!-- Stili CSS -->
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #0d0d0d; /* Sfondo scuro */
+            overflow: hidden;
+        }
+
+        canvas {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            color: #ffffff;
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 42px;
+            color: #00ccff;
+            text-shadow: 0 0 8px #00ccff;
+        }
+    </style>
+
+<!--[if gte mso 9]><xml>
+<mso:CustomDocumentProperties>
+<mso:_dlc_DocId msdt:dt="string">6RN3CT7PY46U-1378638055-283440</mso:_dlc_DocId>
+<mso:_dlc_DocIdItemGuid msdt:dt="string">b5ab93fb-9ffc-4a82-adc6-51bb608d3ab6</mso:_dlc_DocIdItemGuid>
+<mso:_dlc_DocIdUrl msdt:dt="string">https://ldsconsultingsrl.sharepoint.com/sites/ExY_Doc/_layouts/15/DocIdRedir.aspx?ID=6RN3CT7PY46U-1378638055-283440, 6RN3CT7PY46U-1378638055-283440</mso:_dlc_DocIdUrl>
+</mso:CustomDocumentProperties>
+</xml><![endif]-->
+</head>
+<body>
+
+    <!-- Canvas per disegnare gli assi, la linea e i pallini -->
+    <canvas id="curveCanvas"></canvas>
+
+    <!-- Contenuto centrale -->
+    <div class="content">
+        <h1>Andamento Prezzi - 1 Anno</h1>
+    </div>
+
+    <!-- Script per creare l'animazione -->
+    <script>
+        const canvas = document.getElementById('curveCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const months = 12;
+        const monthNames = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic']; // Nomi dei mesi
+        const axisMargin = 50;
+        const startX = axisMargin;
+        const endX = canvas.width - axisMargin;
+        const startY = canvas.height - axisMargin;
+
+        const maxPrice = startY - axisMargin; // Distanza massima in Y per i prezzi
+        const prices = []; // Prezzi casuali per ogni mese
+        const points = []; // Punti sulla curva per ogni mese
+        let currentPoint = 0; // Indice dell'animazione
+        const animationSpeed = 0.1; // Velocità dell'animazione regolata per durare 30 secondi
+
+        // Funzione per generare prezzi casuali
+        function generatePrices() {
+            for (let i = 0; i <= months; i++) {
+                const randomPrice = Math.random() * maxPrice + axisMargin;
+                prices.push(randomPrice);
+            }
+        }
+
+        // Funzione per disegnare gli assi cartesiani
+        function drawAxes() {
+            ctx.beginPath();
+            // Asse X (Tempo)
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(endX, startY);
+            ctx.strokeStyle = '#00ccff';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            // Asse Y (Prezzi)
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(startX, axisMargin);
+            ctx.stroke();
+            ctx.closePath();
+
+            // Etichette dei mesi sull'asse X
+            for (let i = 0; i <= months; i++) {
+                const monthX = startX + (i * (endX - startX) / months);
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '16px Roboto';
+                ctx.fillText(monthNames[i], monthX - 15, startY + 30); // Inserire i mesi in lettere
+            }
+        }
+
+        // Funzione per disegnare la linea curva
+        function drawCurve() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawAxes(); // Disegnare gli assi ogni frame
+
+            ctx.beginPath();
+            ctx.moveTo(startX, startY - prices[0]); // Iniziare dal primo punto
+
+            for (let i = 1; i <= currentPoint; i++) {
+                const monthX = startX + (i * (endX - startX) / months);
+                const priceY = startY - prices[i];
+                points.push({ x: monthX, y: priceY }); // Salvare il punto
+
+                // Disegnare la linea curva
+                ctx.lineTo(monthX, priceY);
+            }
+
+            ctx.strokeStyle = '#00ccff';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            ctx.closePath();
+
+            // Disegnare i pallini per ogni mese
+            for (let i = 0; i < points.length; i++) {
+                ctx.beginPath();
+                ctx.arc(points[i].x, points[i].y, 5, 0, Math.PI * 2);
+                ctx.fillStyle = '#ffdf00';
+                ctx.fill();
+                ctx.closePath();
+            }
+
+            // Animazione: estendere la linea gradualmente
+            if (currentPoint < months) {
+                currentPoint += animationSpeed;
+            } else {
+                // Resetta l'animazione dopo aver raggiunto l'ultimo mese
+                currentPoint = 0;
+                points.length = 0; // Svuota l'array dei punti per ripartire
+            }
+
+            requestAnimationFrame(drawCurve);
+        }
+
+        generatePrices(); // Genera i prezzi casuali
+        drawCurve(); // Inizia l'animazione
+
+        // Aggiustare il canvas in caso di ridimensionamento della finestra
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            drawCurve();
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orologio Universale - Animazione Linee</title>
+
+    <!-- Stili CSS -->
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #0d0d0d; /* Sfondo scuro */
+            overflow: hidden;
+        }
+
+        canvas {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            color: #ffffff;
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 42px;
+            color: #00ccff;
+            text-shadow: 0 0 8px #00ccff;
+        }
+    </style>
+
+<!--[if gte mso 9]><xml>
+<mso:CustomDocumentProperties>
+<mso:_dlc_DocId msdt:dt="string">6RN3CT7PY46U-1378638055-283438</mso:_dlc_DocId>
+<mso:_dlc_DocIdItemGuid msdt:dt="string">892ab49a-5f98-40d7-9e17-f7666a38e3b4</mso:_dlc_DocIdItemGuid>
+<mso:_dlc_DocIdUrl msdt:dt="string">https://ldsconsultingsrl.sharepoint.com/sites/ExY_Doc/_layouts/15/DocIdRedir.aspx?ID=6RN3CT7PY46U-1378638055-283438, 6RN3CT7PY46U-1378638055-283438</mso:_dlc_DocIdUrl>
+</mso:CustomDocumentProperties>
+</xml><![endif]-->
+</head>
+<body>
+
+    <!-- Canvas per disegnare le linee -->
+    <canvas id="clockCanvas"></canvas>
+
+    <!-- Contenuto centrale -->
+    <div class="content">
+        <h1>Orologio Universale</h1>
+        <p>Linee animate in senso orario</p>
+    </div>
+
+    <!-- Script per animare le linee -->
+    <script>
+        const canvas = document.getElementById('clockCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const radius = Math.min(canvas.width, canvas.height) / 3;
+        const numLines = 60;
+        const lineDuration = 100; // Tempo di animazione di ogni linea in millisecondi
+        let currentLine = 0;
+        let lines = []; // Array per tenere traccia delle linee visibili
+
+        // Funzione per calcolare la lunghezza della linea in base all'indice
+        function getLineLength(index) {
+            if (index % 15 === 0) {
+                return radius; // Linea più lunga ogni 15 (più lunga)
+            } else if (index % 5 === 0) {
+                return radius * 0.75; // Linea media ogni 5 (75% della lunghezza)
+            } else {
+                return radius * 0.5; // Linea più corta (50% della lunghezza)
+            }
+        }
+
+        // Funzione per disegnare una singola linea
+        function drawLine(index) {
+            const angle = (Math.PI * 2 / numLines) * index;
+            const length = getLineLength(index); // Lunghezza della linea basata sull'indice
+            const lineX = centerX + Math.cos(angle) * length;
+            const lineY = centerY + Math.sin(angle) * length;
+
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.lineTo(lineX, lineY);
+
+            // Impostare la larghezza delle linee ogni 5 e 15
+            if (index % 15 === 0) {
+                ctx.lineWidth = 4; // Linea più spessa ogni 15
+                ctx.strokeStyle = '#00ccff';
+            } else if (index % 5 === 0) {
+                ctx.lineWidth = 2.5; // Linea più spessa ogni 5
+                ctx.strokeStyle = '#007bff';
+            } else {
+                ctx.lineWidth = 1.5; // Linea normale
+                ctx.strokeStyle = '#0056b3';
+            }
+
+            ctx.stroke();
+            ctx.closePath();
+        }
+
+        // Funzione principale per disegnare e animare le linee
+        function drawClock() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Pulire il canvas
+
+            // Disegnare tutte le linee attualmente visibili
+            for (let i = 0; i < lines.length; i++) {
+                drawLine(lines[i]); // Disegna la linea attuale
+            }
+
+            // Aggiungere una nuova linea se non abbiamo ancora completato il ciclo
+            if (currentLine < numLines) {
+                lines.push(currentLine);
+                currentLine++;
+            } else {
+                // Quando il ciclo è completato, rimuovi le linee più vecchie
+                if (lines.length > 0) {
+                    lines.shift(); // Rimuove la linea più vecchia
+                }
+
+                // Ripetere l'animazione quando tutte le linee sono state disegnate
+                if (lines.length === 0) {
+                    currentLine = 0; // Reset per ricominciare da capo
+                }
+            }
+
+            requestAnimationFrame(drawClock);
+        }
+
+        drawClock();
+
+        // Aggiustare il canvas in caso di ridimensionamento della finestra
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+
+</body>
+</html>
